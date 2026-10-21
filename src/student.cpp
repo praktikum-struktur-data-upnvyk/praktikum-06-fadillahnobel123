@@ -64,7 +64,7 @@ string display(const Queue& q) {
         pertama = false;
     }
 
-    return keluaran.str();
+    return keluaran.str(); 
 }
 // =============================================================================
 
