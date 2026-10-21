@@ -72,24 +72,53 @@ string display(const Queue& q) {
 // SOAL 1 — enqueue()                                                  35 poin
 // =============================================================================
 bool enqueue(Queue& q, int nomor) {
-    // TODO: kerjakan di sini
-    return false;
+    Node* baru = new Node{nomor, nullptr};
+    if (isEmpty(q)) {
+        q.depan = baru;
+        q.belakang = baru;
+    } else {
+        q.belakang->next = baru;
+        q.belakang = baru;
+    }
+    return true;
 }
 
 // =============================================================================
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
-    // TODO: kerjakan di sini
-    return false;
+    if (isEmpty(q)) {
+        return false; // Queue kosong
+    }
+    
+    Node* temp = q.depan;
+    nomor = temp->data;       // Mengambil nilai dari field 'data'
+    q.depan = q.depan->next;  // Geser 'depan' ke node berikutnya
+    
+    // Jika setelah digeser antrean menjadi kosong, 'belakang' juga harus NULL
+    if (q.depan == nullptr) {
+        q.belakang = nullptr;
+    }
+    
+    delete temp;              // Hapus node lama dari memori
+    return true;
 }
 
 // =============================================================================
 // SOAL 3 — clear()                                                    25 poin
 // =============================================================================
 void clear(Queue& q) {
-    // TODO: kerjakan di sini
+    Node* current = q.depan;
+    while (current != nullptr) {
+        Node* nextNode = current->next; // Simpan alamat node berikutnya
+        delete current;                // Hapus node saat ini
+        current = nextNode;            // Pindah ke node berikutnya
+    }
+    // Set kedua penunjuk kembali ke NULL sesuai kontrak
+    q.depan = nullptr;
+    q.belakang = nullptr;
 }
+
 
 // =============================================================================
 // MAIN() — program utama. TIDAK DINILAI, BEBAS DIUBAH.
